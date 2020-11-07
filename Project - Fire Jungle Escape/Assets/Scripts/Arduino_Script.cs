@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO.Ports;
 using System.Net.Sockets;
 using UnityEditor;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Arduino_Script : MonoBehaviour
 {
     [SerializeField] float Speed = 2;
-    public string v = "", d = "";
+    public string v = "0", d = "0";
     public float valor = 9;
     
     SerialPort porta = new SerialPort("COM3", 9600);
@@ -47,10 +49,10 @@ public class Arduino_Script : MonoBehaviour
                 for (int i = 1; i <= v.Length; i++)
                 {
                     d += v[i];
-                    if (i == v.Length)
-                    {
-                        d += "\0";
-                    }
+                    //if (i == v.Length)
+                    //{
+                    //    d += "\0";
+                    //}
                 }
                 break;
         }
@@ -58,7 +60,7 @@ public class Arduino_Script : MonoBehaviour
     }
     void setPos()
     {
-        valor = float.Parse(d);
+        valor = float.Parse(d) ;
         valor /= 100;
 
         Debug.Log("Valor: " + valor);
@@ -73,7 +75,6 @@ public class Arduino_Script : MonoBehaviour
             if (transform.position.x < valor && transform.position.x < 11)
             {
                 transform.Translate(Vector3.right * Time.deltaTime * Speed);
-
             }
         }
     }
