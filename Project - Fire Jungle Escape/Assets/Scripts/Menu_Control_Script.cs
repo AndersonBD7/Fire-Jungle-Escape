@@ -6,11 +6,17 @@ using UnityEngine.UI;
 
 public class Menu_Control_Script : MonoBehaviour
 {
+    [Header("Canvas")]
     [SerializeField] Text Cronometro_Texto;
-    [SerializeField] Text Points_Texto;
-
+    [SerializeField] Text Score_Texto;
     [SerializeField] Image life_Bar;
     [SerializeField] Slider Volume_Control;
+    [Header("Scene Velocity")]
+    [SerializeField] float time_Up = 1;
+    [SerializeField] float time_Quant = 0.001f;
+    [SerializeField] Move_Obj_Script move1;
+    [SerializeField] Move_Obj_Script move2;
+
 
     Player_Script Player;
     GameObject Menu_Pause;
@@ -19,6 +25,7 @@ public class Menu_Control_Script : MonoBehaviour
     public AudioSource Audio_Control;
 
     private float StartTime;
+    float time;
     float TimerControl;
     string mins ;
     string segs ;
@@ -35,12 +42,16 @@ public class Menu_Control_Script : MonoBehaviour
 
         Audio_Control = GameObject.Find("Audio Control").GetComponent<AudioSource>();
 
+        Cronometro_Texto = GameObject.Find("Time Text").GetComponent<Text>();
+        Score_Texto = GameObject.Find("Score Text").GetComponent<Text>();
+
         Menu_Pause = GameObject.Find("Menu Pause");
         Menu_Pause.SetActive(false);
         
         Menu_Over = GameObject.Find("Menu GameOver");
         Menu_Over.SetActive(false);
         
+
         Time.timeScale = 1;
 
 
@@ -48,14 +59,16 @@ public class Menu_Control_Script : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        Pause();
-        
-        Volume();
-        Cronometro();
+    {        Pause();
         GameOver();
-        Life_Bar_Status();
-        Points_Status();
+        if (Time.timeScale == 1)
+        {
+            VelocidadeUp();
+            Volume();
+            Cronometro();
+            Life_Bar_Status();
+            Points_Status();
+        }
     }
     void Cronometro()
     {
@@ -83,7 +96,7 @@ public class Menu_Control_Script : MonoBehaviour
     }
     void Points_Status()
     {
-    Points_Texto.text=string.Format("Pontos: {0:D5}", Player.points);
+        Score_Texto.text=string.Format("Pontos: {0:D5}", Player.points);
     }
     void Pause()
     {
@@ -115,6 +128,16 @@ public class Menu_Control_Script : MonoBehaviour
         if (Time.timeScale == 0)
         {
             Audio_Control.volume = Volume_Control.value;
+        }
+    }
+    void VelocidadeUp()
+    {
+        time += Time.deltaTime;
+        if (time >= time_Up)
+        {
+            time = 0;
+            move1.Speed += time_Quant;
+            move2.Speed += time_Quant;
         }
     }
     public void Button_Continue()

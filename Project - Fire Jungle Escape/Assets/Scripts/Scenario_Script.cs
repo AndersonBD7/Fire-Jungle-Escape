@@ -5,12 +5,14 @@ using UnityEngine;
 public class Scenario_Script : MonoBehaviour
 {
     [SerializeField] Move_Obj_Script move;
+    [SerializeField] float Speed_Begin = 10;
     [SerializeField] GameObject scenario;
     [SerializeField] Vector3 Pos_Begin = new Vector3(0, 200, 0);
     // Start is called before the first frame update
     void Start()
     {
-        
+        move.Speed = Speed_Begin;
+
     }
 
     // Update is called once per frame
