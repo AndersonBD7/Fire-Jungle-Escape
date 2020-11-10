@@ -8,14 +8,14 @@ public class Player_Script : MonoBehaviour
     public float life_Max = 100;
     public float life;
     public int points = 0;
-    public float timer=0;
+    public float timer = 0;
     public float Speed = 2;
     [SerializeField] float Jump_Height = 4;
     [SerializeField] float Jump_Strong = 100f;
     [SerializeField] bool Jump = true;
     [SerializeField] bool Arduino = true;
-    
-        Rigidbody rig;
+
+    Rigidbody rig;
     Vector3 movement;
     // Start is called before the first frame update
     void Start()
@@ -43,20 +43,6 @@ public class Player_Script : MonoBehaviour
             timer = 0;
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        switch(other.gameObject.tag)
-        {
-            case "Obstaculo":
-                points -= 5; life -= 10;
-
-                break;
-            case "life":
-                life += 10;
-
-                break;
-        }
-    }
     void move()
     {
         movement.x = Input.GetAxis("Horizontal") * Speed * Time.deltaTime;
@@ -81,6 +67,29 @@ public class Player_Script : MonoBehaviour
             {
                 Jump = true;
             }
+        }
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        switch (other.gameObject.tag)
+        {
+            case "Obstaculo":
+                points -= 5; life -= 10;
+
+                break;
+            case "Life":
+                Debug.Log("ttttt");
+                if ((life + 10) > 100)
+                {
+                    life = 100;
+                }
+                else
+                {
+                    life += 10;
+                }
+                Destroy(other.gameObject);
+                break;
         }
     }
 }

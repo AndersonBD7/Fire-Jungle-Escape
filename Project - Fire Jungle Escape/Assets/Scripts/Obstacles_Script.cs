@@ -30,10 +30,10 @@ public class Obstacles_Script : MonoBehaviour
             }
         }
     }
- 
+
     public Vector3 P_Begin()
     {
-        Pos_Begin.x=Random.Range(X_Min_max.x, X_Min_max.y);
+        Pos_Begin.x = Random.Range(X_Min_max.x, X_Min_max.y);
         return Pos_Begin;
     }
 }

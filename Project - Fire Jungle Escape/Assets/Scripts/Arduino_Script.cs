@@ -13,7 +13,6 @@ public class Arduino_Script : MonoBehaviour
     [Header("Valores Arduino")]
     [SerializeField] string v = "0";
     [SerializeField] string d = "0";
-    [SerializeField] string letra = "0";
 
     [SerializeField] float valor_V = 0;
     [SerializeField] float valor_H = 0;
@@ -90,7 +89,6 @@ public class Arduino_Script : MonoBehaviour
                 break;
         }
 
-        letra = "";
     }
     void setPos()
     {
